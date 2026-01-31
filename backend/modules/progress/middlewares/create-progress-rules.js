@@ -3,10 +3,10 @@ const checkValidation = require("../../../shared/middlewares/check-validation");
 
 const createProgressRules = [
 
-  body("user")
+  body("username")
     .notEmpty()
     .withMessage("User is required")
-    .isMongoId()
+    .isString()
     .withMessage("User must be a valid username"),
 
   body("level")

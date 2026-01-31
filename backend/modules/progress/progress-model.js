@@ -46,8 +46,9 @@ const LetterProgressSchema = new mongoose.Schema(
 
 const ProgressSchema = new mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
+
+    username: {
+      type: String,
       ref: "User",
       required: true,
       unique: true,
