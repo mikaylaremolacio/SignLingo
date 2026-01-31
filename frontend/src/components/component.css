@@ -109,7 +109,7 @@
     border-radius: 20px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     outline: none;
-    
+
 }
 
 .inputField::placeholder {
@@ -161,4 +161,299 @@
     border-color: #F3C838;
     transform: scale(0.98);
     color: #000000;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 330px;
+    height: 100vh;
+    background: #FFE5E9;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.sidebarContent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 30px 25px 20px 25px;
+    gap: 25px;
+    overflow-y: auto;
+}
+
+/* Logo Section */
+.logoSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebarLogo {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+}
+
+/* Navigation */
+.sidebarNav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+}
+
+/* Sidebar Buttons */
+.sidebarButton {
+    width: 100%;
+    padding: 18px 30px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    color: #FFFFFF;
+    background: #FF848E;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.sidebarButton:hover {
+    background-color: #FFFFFF;
+    color: #FF848E;
+    transform: scale(1.05);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.sidebarButton:active {
+    background-color: #F3C838;
+    color: #000000;
+    transform: scale(0.98);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Reviews Section */
+.reviewsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: #FF848E;
+    padding: 20px;
+    border-radius: 30px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.reviewsHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.reviewsText {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    color: #FFFFFF;
+}
+
+.questionIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: #FFFFFF;
+    color: #FF848E;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.questionIcon:hover {
+    background: #0527A6;
+    color: #FFFFFF;
+    transform: scale(1.1);
+}
+
+.reviewsCounter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reviewsNumber {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 32px;
+    color: #0527A6;
+}
+
+.startButton {
+    background: #0527A6;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.startButton:hover {
+    background-color: #FFFFFF;
+    color: #FF848E;
+    transform: scale(1.05);
+}
+
+.startButton:active {
+    background-color: #F3C838;
+    color: #000000;
+    transform: scale(0.98);
+}
+
+/* Footer */
+.sidebarFooter {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.footerLinks {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.footerLinks a {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #0527A6;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footerLinks a:hover {
+    color: #FF848E;
+}
+
+.copyright {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #0527A6;
+    text-align: center;
+    margin: 0;
+}
+
+/* Popup Styles */
+.popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(4px);
+}
+
+.popupContent {
+    background: #FFE5E9;
+    border-radius: 40px;
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.popupHeader {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.popupQuestionIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: #0527A6;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 50%;
+    font-size: 32px;
+    font-weight: 900;
+    flex-shrink: 0;
+}
+
+.popupTitle {
+    background: #FF848E;
+    color: #FFFFFF;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    padding: 15px 25px;
+    border-radius: 30px;
+    flex: 1;
+}
+
+.popupBody {
+    background: #FFFFFF;
+    padding: 25px;
+    border-radius: 25px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popupBody p {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #0527A6;
+    margin: 0;
+}
+
+.popupCloseButton {
+    align-self: center;
+    padding: 15px 50px;
+    background: #FF848E;
+    color: #FFFFFF;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.popupCloseButton:hover {
+    background: #FFFFFF;
+    color: #FF848E;
+    transform: scale(1.05);
+}
+
+.popupCloseButton:active {
+    background: #F3C838;
+    color: #000000;
+    transform: scale(0.98);
 }
