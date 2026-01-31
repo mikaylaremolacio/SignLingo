@@ -36,4 +36,3 @@ server.listen(port, hostname, (error) => {
   if (error) console.log(error.message);
   else console.log(`Server running on http://${hostname}:${port}`);
 });
-s
