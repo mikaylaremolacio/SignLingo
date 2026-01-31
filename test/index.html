@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASL Detector with Countdown</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        
+        h1 {
+            color: #333;
+        }
+        
+        .video-container {
+            position: relative;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .input_video {
+            display: none;
+        }
+        
+        .output_canvas {
+            border-radius: 8px;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        #startButton {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        #startButton:hover:not(:disabled) {
+            background-color: #45a049;
+        }
+        
+        #startButton:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        #countdown {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6b6b;
+            min-height: 30px;
+        }
+        
+        .letter-display {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .letter-label {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        #letter {
+            font-size: 72px;
+            font-weight: bold;
+            color: #2196F3;
+            min-width: 100px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>ASL Letter Detector</h1>
+    
+    <div class="video-container">
+        <video class="input_video"></video>
+        <canvas class="output_canvas"></canvas>
+    </div>
+    
+    <div class="controls">
+        <button id="startButton">Start Detection</button>
+        <div id="countdown"></div>
+    </div>
+    
+    <div class="letter-display">
+        <div class="letter-label">Detected Letter:</div>
+        <div id="letter">—</div>
+    </div>
+
+    <!-- MediaPipe Hands -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+    
+    <!-- ASL Detector Script -->
+    <script src="script.js"></script>
+</body>
+</html>
