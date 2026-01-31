@@ -1,17 +1,15 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
-import Welcome from "./Welcome";
-import Navbar from "./Navbar";
+import Login from "./components/Login";
 
 function App() {
 
   return (
     <BrowserRouter>
-  <Navbar />
-      <Routes>
-        <Route path="/" element={<Welcome />} />
-      </Routes>
+    <Routes>
+      <Route path="/" element = {<Login/>}/>
+    </Routes>
     </BrowserRouter>
   );
 }
