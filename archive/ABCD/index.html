@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ASL A-Z Detection Improved</title>
+<style>
+  body { display: flex; flex-direction: column; align-items: center; font-family: sans-serif; }
+  canvas { border: 1px solid black; }
+  #letter { font-size: 48px; margin: 10px; }
+  #countdown { font-size: 24px; margin: 5px; }
+</style>
+</head>
+<body>
+<h1>ASL Letter Detection (A-Z) – Improved</h1>
+
+<video class="input_video" autoplay style="display:none;"></video>
+<canvas class="output_canvas" width="640" height="480"></canvas>
+
+<div id="letter">–</div>
+<div id="countdown"></div>
+<button id="startButton">Start Detection</button>
+
+<!-- Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fingerpose/dist/fingerpose.min.js"></script>
+
+<!-- Our JS -->
+<script src="script.js"></script>
+
+</body>
+</html>
