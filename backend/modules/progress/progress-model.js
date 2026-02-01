@@ -67,7 +67,6 @@ const ProgressSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// ProgressSchema.index({ user: 1 }, { unique: true });
 ProgressSchema.index({ "letters.review.nextReviewAt": 1 });
 
 const ProgressModel = mongoose.model(

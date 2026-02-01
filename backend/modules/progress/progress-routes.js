@@ -1,12 +1,12 @@
 const { Router } = require("express");
 
 const ProgressModel = require("./progress-model");
-const LetterModel = require('../letters/letter-model');
+const LetterModel = require('../letters/letters-model');
 
 const progressRoute = Router();
 
 //Get information for Progress Page display and Expanded Letter View PopUp
-progressRoute.post("/progress", async (req, res) => {
+progressRoute.post("/", async (req, res) => {
     try {
         const { username } = req.body;
 
