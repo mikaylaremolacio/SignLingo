@@ -21,6 +21,13 @@ progressRoute.post("/", async (req, res) => {
             });
         }
 
+        const letters = await LetterModel.find({});
+        if (!letters) {
+            return res.status(404).send({
+                errorMessage: `Letters not found`,
+            });
+        }
+
         // store NEEDED LETTER PROGRESS
         const letterProgress = userProgress.letters || [];
         const userLetters = letterProgress.map((letter) => ({
@@ -30,6 +37,7 @@ progressRoute.post("/", async (req, res) => {
             correctReviews: letter.review.correctReviews,
             incorrectReviews: letter.review.incorrectReviews,
             interval: letter.review.interval,
+            URL: letters.find(l => l.letter === letter.letter)?.url || null,
         }));
 
         // Get ALL LETTERS (for display and filtering what letters user has/doesnt have)
@@ -214,8 +222,8 @@ progressRoute.post("/today-reviews", async (req, res) => {
 });
 
 /*
-    6 NOT WORKING YET
-*/
+    6 The following route was in plans for implementing but we ran out of time to do so.
+
 //POST for UPDATING USER LETTER PROGRESS after a REVIEW RESULT (TB invoked after each term in review session)
 progressRoute.post("/review-result ", async (req, res) => {
     try {
@@ -278,6 +286,6 @@ progressRoute.post("/review-result ", async (req, res) => {
 
 });
 
-
+*/
 
 module.exports = { progressRoute };
