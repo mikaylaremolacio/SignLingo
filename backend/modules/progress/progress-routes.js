@@ -4,6 +4,4 @@ const ProgressModel = require("./progress-model");
 
 const progressRoute = Router();
 
-
-
 module.exports = { progressRoute };

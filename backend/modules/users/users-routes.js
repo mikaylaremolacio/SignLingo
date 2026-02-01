@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const loginRules = require("./middlewares/login-rules");
+const bcrypt = require("bcrypt");
 const UserModel = require("./users-model");
 const { matchPassword } = require("../../shared/password-utils");
 const usersRoute = Router();
@@ -51,6 +52,27 @@ usersRoute.get("/accounts/:id", async (req, res) => {
   } catch (err) {
     res.status(400).send({ errorMessage: "Invalid user ID" });
   }
+});
+
+// Register Route
+usersRoute.post("/register", async (req, res) => {
+  const newUser = req.body;
+  const existingUser = await UserModel.findOne({
+    username: newUser.username,
+  });
+  if (existingUser) {
+    return res.status(500).json({
+      errorMessage: `User with ${newUser.username} already exist`,
+    });
+  }
+  const addedUser = await UserModel.create(newUser);
+  if (!addedUser) {
+    return res.status(500).send({
+      errorMessage: `Oops! User couldn't be added!`,
+    });
+  }
+  const user = { ...addedUser.toJSON(), password: undefined };
+  res.json(user);
 });
 
 module.exports = { usersRoute };
