@@ -63,8 +63,9 @@ function Letter({ username }) {
     const calculateAccuracy = (correctReviews, incorrectReviews) => {
         const totalReviews = correctReviews + incorrectReviews;
         if (totalReviews === 0) return 0;
-        return ((correctReviews / totalReviews) * 100).toFixed(2);
+        return ((correctReviews / totalReviews) * 100).toFixed(0);
     };
+
 
     return (
         <div className="progressContent">
@@ -105,12 +106,26 @@ function Letter({ username }) {
             {showPopup && (
                 <div className="popupOverlay" onClick={() => setShowPopup(false)}>
                     <div className="popupContent" onClick={(e) => e.stopPropagation()}>
-                        <div className="letterPopupHeader">
-                            <h1>{selectedLetter.letter} : LEVEL </h1>
+
+                        <div style={{ display: "flex", flexDirection: "row", gap: "20px", alignItems: "center"}}>
+
+                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "10px", borderRadius: "10px"}}>
+                                <div className="letterPopupHeader">
+                                    <h1>{selectedLetter.letter} : LEVEL {selectedLetter.level}</h1>
+                                </div>
+                                <div className="letterDetail">STREAK: {selectedLetter.streak}</div>
+                                <div className="letterDetail">ACCURACY: {calculateAccuracy(selectedLetter.correctReviews, selectedLetter.incorrectReviews)}%</div>
+                                <p className='letterText'>Next review in {selectedLetter.interval} days</p>
+                            </div>
+
+                            <p style={{ backgroundColor: "white", width: "300px", height: "300px", display: "flex", justifyContent: "left", alignItems: "center", border: "1px", borderRadius: "20px" }}>
+                                <img src={`../handimage/${selectedLetter.letter}.svg`} alt={selectedLetter.letter} width="250" height="250" />
+                            </p>
+
                         </div>
-                        <div className="letterDetail">STREAK {selectedLetter.streak}</div>
-                        <div className="letterDetail">ACCURACY {calculateAccuracy(selectedLetter.correctReviews, selectedLetter.incorrectReviews)} %</div>
-                        <p>Next review in {selectedLetter.interval} days</p>
+
+
+
                         <button className="popupCloseButton" onClick={() => setShowPopup(false)}>
                             Close
                         </button>
