@@ -37,13 +37,13 @@ function Login() {
       const data = await response.json();
 
       if(response.ok){
-        navigate("/level", { state: { user: data.user.username } });
+        navigate("/level", { state: { username: data.user.username } });
       }else{
         setError(data.errorMessage || "Login failed. Please try again.");
         setSubmit(false);
       }
     } catch (err){
-      alert("Network error. Please try again later.");
+      setError("Network error. Please try again later.");
       console.error(err);
       setSubmit(false);
     }

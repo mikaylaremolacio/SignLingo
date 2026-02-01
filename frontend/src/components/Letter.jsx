@@ -1,19 +1,20 @@
 import './component.css';
 import signLingoLogo from '../assets/signLingoLogo.png';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 
-function Letter() {
+function Letter({ username }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [allLetters, setAllLetters] = useState([]);
     const [userLetters, setUserLetters] = useState([]);
-    const location = useLocation();
-    const username = location.state?.username;
 
     useEffect(() => {
-
         const fetchLetters = async () => {
+            if (!username) {
+                setError("Username is required.");
+                setLoading(false);
+                return;
+            }
 
             try {
                 const response = await fetch("http://localhost:3000/progress", {
@@ -42,9 +43,8 @@ function Letter() {
 
         };
 
-        if (username) {
-            fetchLetters();
-        }
+        fetchLetters();
+
     }, [username]);
 
     const isLetterUnLocked = (letter) => {
@@ -59,30 +59,32 @@ function Letter() {
     };
 
     return (
-        <div>
-            <h2>{username}</h2>
-            <section>
+        <div className="progressContent">
+            <div className="progressContentContainer"> 
+                <h2>{username}</h2>
+                <section>
 
-                {allLetters.map((letterObject) => {
+                    {allLetters.map((letterObject) => {
 
-                    const unlockedLetters = isLetterUnLocked(letterObject.letter);
+                        const unlockedLetters = isLetterUnLocked(letterObject.letter);
 
-                    if (unlockedLetters) {
-                        return (
-                            <button key={letterObject._id} >
-                                {letterObject.letter}
-                            </button>
-                        );
-                    } else {
-                        return (
-                            <button key={letterObject._id} disabled >
-                                {letterObject.letter}
-                            </button>
-                        );
-                    }
-                })}
+                        if (unlockedLetters) {
+                            return (
+                                <button key={letterObject._id} >
+                                    {letterObject.letter}
+                                </button>
+                            );
+                        } else {
+                            return (
+                                <button key={letterObject._id} disabled >
+                                    {letterObject.letter}
+                                </button>
+                            );
+                        }
+                    })}
 
-            </section>
+                </section>
+            </div>
 
         </div>
     );
