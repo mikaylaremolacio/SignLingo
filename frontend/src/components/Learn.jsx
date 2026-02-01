@@ -1,19 +1,20 @@
 import './component.css';
 import signLingoLogo from '../assets/signLingoLogo.png';
 import Navbar from './Navbar';
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import { useLocation } from 'react-router-dom';
+import ASLDetector from "./ASLDetector";
+
+
+    
+//=======
+import ASLDetector from "./ASLDetector";
 
 function Learn() {
     const location = useLocation();
     const username = location.state?.username;
-    
-=======
-import ASLDetector from "./ASLDetector";
 
-function Learn() {
-
->>>>>>> main
+//>>>>>>> main
     return (
         <>
             <Navbar username={username}/>
