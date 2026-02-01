@@ -5,6 +5,9 @@ const LetterModel = require('../letters/letters-model');
 
 const progressRoute = Router();
 
+/* 
+    1
+ */
 //Get information for Progress Page display and Expanded Letter View PopUp
 progressRoute.post("/", async (req, res) => {
     try {
@@ -46,7 +49,9 @@ progressRoute.post("/", async (req, res) => {
 );
 
 
-
+/* 
+    2
+ */
 //Get Information about Letters to form Levels [to be implemented in this function :( )] and User Progress (username + levels) to filter current user level
 progressRoute.post("/home-information", async (req, res) => {
     try {
@@ -97,6 +102,10 @@ progressRoute.post("/home-information", async (req, res) => {
     }
 });
 
+
+/* 
+    3
+ */
 //GET Review Letters for the LEVEL PAGE (when level is opened)
 progressRoute.get("/:id", async (req, res) => {
     try {
@@ -118,6 +127,9 @@ progressRoute.get("/:id", async (req, res) => {
     }
 });
 
+/* 
+    4
+ */
 //POST FOR UPDATING USER PROGRESS AFTER LEVEL COMPLETION
 progressRoute.post("/update", async (req, res) => {
 
@@ -148,6 +160,7 @@ progressRoute.post("/update", async (req, res) => {
             // append an object of a new letter to user's letterProgress array
             userProgress.letters.push({
                 letter: letter.letter,
+                level: letter.level,
                 review: {
                     interval: 1,
                     easeFactor: 2.5,
@@ -168,5 +181,102 @@ progressRoute.post("/update", async (req, res) => {
         res.status(500).send({ errorMessage: "Internal server error" });
     }
 });
+
+/* 
+    5
+ */
+//POST for retrieving ALL USER LETTERS PROGRESS and RETURNING TODAY's REVIEWS
+progressRoute.post("/today-reviews", async (req, res) => {
+    try {
+        const { username } = req.body;
+
+        // Get USER PROGRESS based on USERNAME => get LETTER PROGRESS
+        const userProgress = await ProgressModel.findOne({ username });
+        if (!userProgress) {
+            return res.status(404).send({
+                errorMessage: `Progress for user ${username} doesn't exist`,
+            });
+        }
+
+        // Filter letters that are due for review today or earlier
+        const today = new Date();
+        const dueReviews = userProgress.letters.filter(letter => {
+            return new Date(letter.review.nextReviewAt) <= today;
+        });
+
+        res.status(200).send({ dueReviews: dueReviews });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ errorMessage: "Internal server error" });
+    }
+});
+
+/*
+    6 NOT WORKING YET
+*/
+//POST for UPDATING USER LETTER PROGRESS after a REVIEW RESULT (TB invoked after each term in review session)
+progressRoute.post("/review-result ", async (req, res) => {
+    try {
+        const { username, letter, result } = req.body;
+
+        // Get USER PROGRESS based on USERNAME => get LETTER PROGRESS
+        const userProgress = await ProgressModel.findOne({ username });
+        if (!userProgress) {
+            return res.status(404).send({
+                errorMessage: `Progress for user ${username} doesn't exist`,
+            });
+        }
+
+        // Find the specific letter to update
+        const letterToAdvance = userProgress.letters.find(l => l.letter === letter);
+
+        // SRS Algorithm Implementation
+        if (result === "correct") {
+            letterToAdvance.review.interval += 1;
+            letterToAdvance.review.easeFactor += 1;
+            letterToAdvance.review.repetitions += 1;
+            letterToAdvance.review.nextReviewAt = new Date(letterToAdvance.review.nextReviewAt.getTime() + (24 * 60 * 60 * 1000));
+            letterToAdvance.review.lastReviewedAt = new Date();
+            letterToAdvance.review.correctReviews += 1;
+            letterToAdvance.review.correctReviews += 1;
+            letterToAdvance.review.correctReviews += 1;
+        } else {
+            letterToAdvance.review.incorrectReviews += 1;
+        }
+
+        let newInterval = 0;
+        if (result === "correct") {
+            if (repetitions === 0) {
+                newInterval = 1;
+            } else if (repetitions === 1) {
+                newInterval = 6;
+            } else {
+                newInterval = Math.round(interval * easeFactor);
+            }
+        } else {
+            newInterval = 1; // Reset interval on incorrect review
+        }
+
+        letterToAdvance.review.interval = newInterval;
+        letterToAdvance.review.repetitions += 1;
+
+        // Update next review date
+        const nextReviewDate = new Date();
+        nextReviewDate.setDate(nextReviewDate.getDate() + newInterval);
+        letterToAdvance.review.nextReviewAt = nextReviewDate;
+
+        await userProgress.save();
+        res.status(200).send({ message: "Letter progress updated successfully", updatedLetter: letterToAdvance });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ errorMessage: "Internal server error" });
+    }
+
+
+});
+
+
 
 module.exports = { progressRoute };
