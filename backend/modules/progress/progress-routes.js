@@ -97,5 +97,76 @@ progressRoute.post("/home-information", async (req, res) => {
     }
 });
 
+//GET Review Letters for the LEVEL PAGE (when level is opened)
+progressRoute.get("/:id", async (req, res) => {
+    try {
+        const levelId = parseInt(req.params.id);
+
+        // Get ALL LETTERS for the LEVEL
+        const levelLetters = await LetterModel.find({ level: levelId });
+        if (!levelLetters) {
+            return res.status(404).send({
+                errorMessage: `Letters for level ${levelId} not found`,
+            });
+        }
+
+        res.status(200).send({ levelLetters: levelLetters });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ errorMessage: "Internal server error" });
+    }
+});
+
+//POST FOR UPDATING USER PROGRESS AFTER LEVEL COMPLETION
+progressRoute.post("/update", async (req, res) => {
+
+    try {
+        const { username } = req.body;
+        const userProgress = await ProgressModel.findOne({ username });
+        if (!userProgress) {
+            return res.status(404).send({
+                errorMessage: `Progress for user ${username} doesn't exist`,
+            });
+        }
+
+        // Update the user's level
+        const newLevel = userProgress.level + 1;
+        userProgress.level = newLevel;
+        await userProgress.save();
+
+        // Get ALL LETTERS for the COMPLETED LEVEL
+        const levelLetters = await LetterModel.find({ level: newLevel - 1 });
+        if (!levelLetters) {
+            return res.status(404).send({
+                errorMessage: `Letters for level ${newLevel - 1} not found`,
+            });
+        }
+
+        for (const letter of levelLetters) {
+            let currentDate = new Date();
+            // append an object of a new letter to user's letterProgress array
+            userProgress.letters.push({
+                letter: letter.letter,
+                review: {
+                    interval: 1,
+                    easeFactor: 2.5,
+                    repetitions: 1,
+                    nextReviewAt: new Date(currentDate.getTime() + (24 * 60 * 60 * 1000)),
+                    lastReviewedAt: null,
+                    correctReviews: 1,
+                    incorrectReviews: 0,
+                },
+            })
+        };
+
+        await userProgress.save();
+        res.status(200).send({ message: "User progress updated successfully", progress: userProgress.letters });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ errorMessage: "Internal server error" });
+    }
+});
 
 module.exports = { progressRoute };
