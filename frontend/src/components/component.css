@@ -163,6 +163,55 @@
     color: #000000;
 }
 
+.backButton {
+    width: 100px;
+    height: 60px;
+    background: #FF848E;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    border: 2px solid #FF848E;
+    font-family: "Nunito", sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    list-style-type: none;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 20px;
+    margin-top: 25px;
+}
+
+.backButton li {
+    text-align: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    line-height: 60px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.backButton:hover {
+    background-color: #0527A6;
+    border-color: #0527A6;
+    transform: scale(1.05);
+    color: #ffffff;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.backButton:active {
+    background-color: #F3C838;
+    border-color: #F3C838;
+    transform: scale(0.98);
+    color: #000000;
+}
+
 /* Sidebar Styles */
 .sidebar {
     position: fixed;
@@ -569,3 +618,33 @@
     display: inline-block;
 }
 
+/* Navbar */
+.containerHeader {
+    background-color: #ffeff2;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.navLogoHeader {
+    height: 80px;
+    width: auto;
+    margin: 10px;
+    margin-left: 30px;
+    margin-top: 15px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    padding-inline-start: 0;
+    margin: 0;
+}
+
+/* Learn Page */
+.learnContainer{
+    background-color: #0527A6;
+}
