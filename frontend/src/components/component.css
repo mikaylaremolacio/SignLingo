@@ -672,7 +672,7 @@
 }
 
 .progressContentContainer{
-    margin-left: 70px;
+    margin-left: 90px;
 }
 
 /* Letter Grid */
@@ -688,23 +688,25 @@
     height: 100px;
     border-radius: 50%;
     border: none;
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     font-weight: 900;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
-    color: #dc2626;
+    background: #F7D4DA;
+    color: #E66176;
     font-family: 'Nunito', sans-serif;
 }
 
 .progressContent section button:not(:disabled):hover {
     transform: scale(1.1);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    background: #ffffff;
+    color: #0527A6;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .progressContent section button:disabled {
-    background: linear-gradient(135deg, #6b5b5b 0%, #4a4a4a 100%);
-    color: #8b0000;
+    background: #6b5b5b;
+    color: #7a0d1c;
     cursor: not-allowed;
     opacity: 0.6;
 }
