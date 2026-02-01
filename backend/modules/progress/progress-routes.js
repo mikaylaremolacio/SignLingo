@@ -78,17 +78,15 @@ progressRoute.post("/home-information", async (req, res) => {
         const letterLevels = new Map();
         allLetters.forEach((letter) => {
             if (!letterLevels.has(letter.level)) {
-                letterLevels.set(letter.level, { letter: letter.letter, url: letter.url, id: letter.id });
+                letterLevels.set(letter.level, [{ letter: letter.letter, id: letter.id }]);
             }
             else {
 
                 const oldValue = letterLevels.get(letter.level);
-                const newValue = [...oldValue, { letter: letter.letter, url: letter.url, id: letter.id }];
+                const newValue = [...oldValue, { letter: letter.letter, id: letter.id }];
                 letterLevels.set(letter.level, newValue);
             }
         });
-
-
 
         // Get USER PROGRESS based on USERNAME => get LEVEL
         const userProgress = await ProgressModel.findOne({ username });
@@ -103,7 +101,8 @@ progressRoute.post("/home-information", async (req, res) => {
             level: userProgress.level,
         };
 
-        res.status(200).send({ homePageInfo: { userInfo: userInfo, letterLevels: letterLevels } });
+const letterLevelsObj = Object.fromEntries(letterLevels);
+        res.status(200).send({ homePageInfo: { userInfo: userInfo, letterLevels: letterLevelsObj } });
 
     } catch (err) {
         console.error(err);
