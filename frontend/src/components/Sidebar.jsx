@@ -45,7 +45,7 @@ function Sidebar({ username }) {
               </div>
               <button
                 className="sidebarButton startButton"
-                onClick={() => navigate("/reviews", {state: { username }})}
+                onClick={() => navigate("/reviews", { state: { username } })}
               >
                 START
               </button>

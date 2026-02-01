@@ -7,6 +7,8 @@ function Letter({ username }) {
     const [error, setError] = useState("");
     const [allLetters, setAllLetters] = useState([]);
     const [userLetters, setUserLetters] = useState([]);
+    const [showPopup, setShowPopup] = useState(false);
+    const [selectedLetter, setSelectedLetter] = useState({});
 
     useEffect(() => {
         const fetchLetters = async () => {
@@ -58,9 +60,15 @@ function Letter({ username }) {
 
     };
 
+    const calculateAccuracy = (correctReviews, incorrectReviews) => {
+        const totalReviews = correctReviews + incorrectReviews;
+        if (totalReviews === 0) return 0;
+        return ((correctReviews / totalReviews) * 100).toFixed(2);
+    };
+
     return (
         <div className="progressContent">
-            <div className="progressContentContainer"> 
+            <div className="progressContentContainer">
                 <h2>{username}</h2>
                 <section>
 
@@ -70,7 +78,14 @@ function Letter({ username }) {
 
                         if (unlockedLetters) {
                             return (
-                                <button key={letterObject._id} >
+                                <button key={letterObject._id}
+                                    onClick={() => {
+
+                                        const userLetterData = userLetters.find((userLetter) => userLetter.letter === letterObject.letter);
+
+                                        setSelectedLetter(userLetterData || letterObject);
+                                        setShowPopup(true)
+                                    }}>
                                     {letterObject.letter}
                                 </button>
                             );
@@ -86,7 +101,25 @@ function Letter({ username }) {
                 </section>
             </div>
 
+            {/* Popup */}
+            {showPopup && (
+                <div className="popupOverlay" onClick={() => setShowPopup(false)}>
+                    <div className="popupContent" onClick={(e) => e.stopPropagation()}>
+                        <div className="letterPopupHeader">
+                            <h1>{selectedLetter.letter} : LEVEL </h1>
+                        </div>
+                        <div className="letterDetail">STREAK {selectedLetter.streak}</div>
+                        <div className="letterDetail">ACCURACY {calculateAccuracy(selectedLetter.correctReviews, selectedLetter.incorrectReviews)} %</div>
+                        <p>Next review in {selectedLetter.interval} days</p>
+                        <button className="popupCloseButton" onClick={() => setShowPopup(false)}>
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
+
         </div>
+
     );
 };
 
