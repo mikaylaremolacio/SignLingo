@@ -47,7 +47,7 @@ progressRoute.post("/", async (req, res) => {
 
 
 
-//Get Information about Letters to form Levels and User Progress (username + levels) to filter current user level
+//Get Information about Letters to form Levels [to be implemented in this function :( )] and User Progress (username + levels) to filter current user level
 progressRoute.post("/home-information", async (req, res) => {
     try {
         const { username } = req.body;
@@ -59,6 +59,22 @@ progressRoute.post("/home-information", async (req, res) => {
                 errorMessage: `Letters not found`,
             });
         }
+
+        //An array of levelsLLDS:K"CE<D?X"L<A
+        const letterLevels = new Map();
+        allLetters.forEach((letter) => {
+            if (!letterLevels.has(letter.level)) {
+                letterLevels.set(letter.level, { letter: letter.letter, url: letter.url, id: letter.id });
+            }
+            else {
+
+                const oldValue = letterLevels.get(letter.level);
+                const newValue = [...oldValue, { letter: letter.letter, url: letter.url, id: letter.id }];
+                letterLevels.set(letter.level, newValue);
+            }
+        });
+
+
 
         // Get USER PROGRESS based on USERNAME => get LEVEL
         const userProgress = await ProgressModel.findOne({ username });
@@ -73,7 +89,7 @@ progressRoute.post("/home-information", async (req, res) => {
             level: userProgress.level,
         };
 
-        res.status(200).send({ homePageInfo: { userInfo: userInfo, allLetters: allLetters } });
+        res.status(200).send({ homePageInfo: { userInfo: userInfo, letterLevels: letterLevels } });
 
     } catch (err) {
         console.error(err);
