@@ -3,7 +3,7 @@ import { useState } from 'react';
 import './component.css';
 import signLingoLogo from '../assets/signLingoLogo.png';
 
-function Sidebar() {
+function Sidebar({ username }) {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
 
@@ -18,14 +18,14 @@ function Sidebar() {
           <nav className="sidebarNav">
             <button
               className="sidebarButton homeButton"
-              onClick={() => navigate("/learn")}
+              onClick={() => navigate("/level", { state: { username } })}
             >
               HOME
             </button>
 
             <button
               className="sidebarButton progressButton"
-              onClick={() => navigate("/progress")}
+              onClick={() => navigate("/progress", { state: { username } })}
             >
               PROGRESS
             </button>
@@ -45,7 +45,7 @@ function Sidebar() {
               </div>
               <button
                 className="sidebarButton startButton"
-                onClick={() => navigate("/reviews")}
+                onClick={() => navigate("/reviews", {state: { username }})}
               >
                 START
               </button>
