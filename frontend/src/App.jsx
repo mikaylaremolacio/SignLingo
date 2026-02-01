@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
 import Login from "./components/Login";
-import Learn from "./components/Learn";
+import Level from "./components/Level";
 
 function App() {
 
@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/" element = {<Login/>}/>
-      <Route path="/learn" element = {<Learn/>}/>
+      <Route path="/Level" element = {<Level/>}/>
     </Routes>
     </BrowserRouter>
   );
