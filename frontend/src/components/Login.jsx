@@ -1,7 +1,55 @@
 import './component.css';
 import signLingoLogo from '../assets/signLingoLogo.png';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [submit, setSubmit] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+    setError("");
+  }
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    setError("");
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmit(true);
+    setError("");
+
+    try {
+      const response = await fetch("http://localhost:5000/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if(response.ok){
+        navigate("/level", { state: { user: data.user.username } });
+      }else{
+        setError(data.errorMessage || "Login failed. Please try again.");
+        setSubmit(false);
+      }
+    } catch (err){
+      alert("Network error. Please try again later.");
+      console.error(err);
+      setSubmit(false);
+    }
+
+  };
+
   return (
     <main className="containerLogin">
       <div className="leftSection">
@@ -16,22 +64,33 @@ function Login() {
           <h1>Welcome to SignLingo</h1>
           <p className="subtitle">Your place to learn ASL with confidence</p>
         </div>
-        
+
         <section className="sectionLogin">
           <h2 className="loginTitle">Log in</h2>
-          <form className="loginForm">
-            <input 
-              type="username" 
-              placeholder="Username" 
+          <form onSubmit={handleSubmit} className="loginForm">
+            <input
+              type="text"
+              placeholder="Username"
               className="inputField"
+              onChange={handleUsernameChange}
+              value={username}
+              disabled={submit}
+              required
             />
-            <input 
-              type="password" 
-              placeholder="Password" 
+            <input
+              type="password"
+              placeholder="Password"
               className="inputField"
+              onChange={handlePasswordChange}
+              value={password}
+              disabled={submit}
+              required
             />
+
+            {error && <p className="errorMessage">{error}</p>}
+
             <p className="noAccount">Don't have an account?</p>
-            <button type="submit" className="button">Log in</button>
+            <button type="submit" disabled={submit} className="button">Log in</button>
           </form>
         </section>
       </div>
