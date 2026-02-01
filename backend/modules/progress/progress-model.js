@@ -49,7 +49,7 @@ const ProgressSchema = new mongoose.Schema(
 
     username: {
       type: String,
-      ref: "User",
+      ref: "user",
       required: true,
       unique: true,
     },
