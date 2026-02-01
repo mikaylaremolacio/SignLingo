@@ -7,6 +7,11 @@ const LetterProgressSchema = new mongoose.Schema(
       required: true,
     },
 
+    level: {
+      type: Number,
+      required: true,
+    },
+
     review: {
       interval: {
         type: Number,
