@@ -15,6 +15,6 @@ userSchema.pre("save", async function () {
   this.password = encodePassword(this.password);
 });
 
-const UserModel = mongoose.model("User", userSchema, "users");
+const UserModel = mongoose.model("user", userSchema, "users");
 
 module.exports = UserModel;
