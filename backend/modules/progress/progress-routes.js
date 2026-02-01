@@ -25,10 +25,11 @@ progressRoute.post("/", async (req, res) => {
         const letterProgress = userProgress.letters || [];
         const userLetters = letterProgress.map((letter) => ({
             letter: letter.letter,
+            level: letter.level,
             streak: letter.review.repetitions,
             correctReviews: letter.review.correctReviews,
             incorrectReviews: letter.review.incorrectReviews,
-            nextReviewAt: letter.review.nextReviewAt,
+            interval: letter.review.interval,
         }));
 
         // Get ALL LETTERS (for display and filtering what letters user has/doesnt have)
